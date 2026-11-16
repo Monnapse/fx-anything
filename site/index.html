@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FX Anything — live effects for any app</title>
+  <meta name="description" content="Free Windows app that puts real-time effects on anything your PC plays: concert venues, 8D audio, slowed + reverb, nightcore, DJ filter and more.">
+  <meta property="og:title" content="FX Anything">
+  <meta property="og:description" content="Real-time effects on anything your PC plays.">
+  <meta property="og:image" content="screenshot.png">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #111213; --panel: #1d1f21; --panel-top: #232527; --line: #2f3235; --text: #e7e7e5; --muted: #9a9ea2; --dim: #62666a;
+      --amber: #f5a524; --green: #4ade80;
+      --mono: 'JetBrains Mono', ui-monospace, Consolas, monospace; --sans: Inter, 'Segoe UI', system-ui, sans-serif;
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: radial-gradient(1000px 500px at 50% -150px, #23201a, transparent), var(--bg); color: var(--text); font: 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+    .mono { font-family: var(--mono); }
+
+    nav { display: flex; align-items: center; justify-content: space-between; padding: 22px 0; }
+    .brand { display: flex; align-items: center; gap: 10px; font: 600 14px var(--mono); letter-spacing: .16em; color: var(--muted); text-decoration: none; }
+    .brand b { color: var(--text); }
+    .brand svg { width: 28px; height: 28px; }
+    nav .links { display: flex; gap: 22px; font-size: 14px; color: var(--muted); }
+    nav .links a { text-decoration: none; }
+    nav .links a:hover { color: var(--text); }
+
+    .hero { text-align: center; padding: 56px 0 28px; }
+    .tag { display: inline-flex; align-items: center; gap: 8px; font: 600 11px var(--mono); letter-spacing: .14em; color: var(--amber); border: 1px solid #4a3a16; background: #1f1b12; padding: 5px 11px; border-radius: 999px; }
+    .tag i { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
+    h1 { font-size: clamp(36px, 6vw, 64px); line-height: 1.05; letter-spacing: -.03em; margin: 22px auto 16px; max-width: 820px; font-weight: 700; }
+    h1 span { color: var(--amber); }
+    .lede { color: var(--muted); font-size: clamp(16px, 2vw, 19px); max-width: 640px; margin: 0 auto; }
+    .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 32px 0 10px; }
+    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 13px 22px; border-radius: 10px; font-weight: 600; text-decoration: none; border: 1px solid var(--line); }
+    .btn.primary { background: var(--amber); color: #1a1203; border-color: transparent; box-shadow: 0 10px 30px -10px rgba(245, 165, 36, .6); }
+    .btn.primary:hover { filter: brightness(1.06); }
+    .btn.ghost { background: var(--panel); }
+    .btn.ghost:hover { border-color: #45494d; }
+    .btn svg { width: 18px; height: 18px; }
+    .fine { color: var(--dim); font-size: 13px; }
+
+    .shot { margin: 40px auto 0; border-radius: 14px; border: 1px solid var(--line); overflow: hidden; box-shadow: 0 40px 100px -30px #000, 0 0 0 6px rgba(255, 255, 255, .02); background: #161718; }
+    .shot img { display: block; width: 100%; height: auto; }
+
+    section { padding: 72px 0 0; }
+    h2 { font-size: clamp(26px, 3.5vw, 36px); letter-spacing: -.02em; margin: 0 0 8px; }
+    .sub { color: var(--muted); margin: 0 0 28px; }
+    .label { font: 600 11px var(--mono); letter-spacing: .16em; color: var(--dim); text-transform: uppercase; margin-bottom: 10px; }
+
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 12px; }
+    .card { background: linear-gradient(var(--panel-top), var(--panel)); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+    .card h3 { margin: 10px 0 4px; font-size: 16px; }
+    .card p { margin: 0; color: var(--muted); font-size: 14px; }
+    .led { width: 8px; height: 8px; border-radius: 50%; display: inline-block; box-shadow: 0 0 10px currentColor; background: currentColor; }
+
+    .steps { counter-reset: s; display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .step { counter-increment: s; position: relative; padding-top: 46px; }
+    .step::before { content: counter(s, decimal-leading-zero); position: absolute; top: 16px; left: 18px; font: 600 13px var(--mono); color: var(--amber); }
+
+    details { border-bottom: 1px solid var(--line); padding: 14px 0; }
+    summary { cursor: pointer; font-weight: 600; list-style: none; display: flex; justify-content: space-between; }
+    summary::after { content: '+'; color: var(--dim); font-family: var(--mono); }
+    details[open] summary::after { content: '–'; }
+    details p { color: var(--muted); margin: 8px 0 0; }
+
+    footer { margin-top: 80px; padding: 28px 0 40px; border-top: 1px solid #1f2123; color: var(--dim); font-size: 13px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    @media (max-width: 640px) { nav .links a:not(.gh) { display: none; } }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <nav>
+      <a class="brand" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="1" width="22" height="22" rx="6" fill="#f5a524"/><path d="M6 15V9M9.5 17V7M13 14v-4M16.5 16V8" stroke="#1a1203" stroke-width="2.2" stroke-linecap="round" fill="none"/><circle cx="19.2" cy="12" r="1.2" fill="#1a1203"/></svg>FX <b>ANYTHING</b></a>
+      <div class="links"><a href="#effects">Effects</a><a href="#setup">Setup</a><a href="#faq">FAQ</a><a class="gh" data-repo-link href="#">GitHub</a></div>
+    </nav>
+
+    <header class="hero">
+      <span class="tag"><i></i>FREE · OPEN SOURCE · WINDOWS</span>
+      <h1>Live effects on <span>anything</span> your PC plays.</h1>
+      <p class="lede">Turn Spotify, YouTube, games or any app into a live concert, 8D audio, slowed + reverb or nightcore. In real time, with a DJ-style rack of knobs.</p>
+      <div class="cta">
+        <a class="btn primary" data-download href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m-5-5 5 5 5-5M4 21h16"/></svg>Download for Windows</a>
+        <a class="btn ghost" data-repo-link href="#">View source</a>
+      </div>
+      <p class="fine">Windows 10/11 · 2 MB download · needs the free VB-CABLE driver</p>
+      <div class="shot"><img src="screenshot.png" alt="FX Anything: input and output pickers, scene pads, spectrum analyser, level meters and a rack of effect modules with knobs" width="1280" height="800"></div>
+    </header>
+
+    <section id="effects">
+      <div class="label">The rack</div>
+      <h2>Eleven effects, eight one-tap scenes.</h2>
+      <p class="sub">Stack them however you like. Every knob responds instantly.</p>
+      <div class="grid">
+        <div class="card"><span class="led" style="color:#f472b6"></span><h3>Concert</h3><p>Club, theater, arena, stadium or festival, with distance from the stage.</p></div>
+        <div class="card"><span class="led" style="color:#22d3ee"></span><h3>8D Audio</h3><p>The music orbits your head. Put headphones on.</p></div>
+        <div class="card"><span class="led" style="color:#c084fc"></span><h3>Pitch</h3><p>Slowed or nightcore sound, ±12 semitones, live.</p></div>
+        <div class="card"><span class="led" style="color:#f5a524"></span><h3>DJ Filter</h3><p>One knob: sweep left for low-pass, right for high-pass.</p></div>
+        <div class="card"><span class="led" style="color:#a78bfa"></span><h3>Reverb &amp; Echo</h3><p>From a small room to infinite space, plus tempo-free delay.</p></div>
+        <div class="card"><span class="led" style="color:#fb923c"></span><h3>Muffle</h3><p>Party in the next room, underwater, old radio, phone call.</p></div>
+        <div class="card"><span class="led" style="color:#e7b07a"></span><h3>Lo-fi</h3><p>Warm, wobbly tape character.</p></div>
+        <div class="card"><span class="led" style="color:#f87171"></span><h3>Karaoke</h3><p>Pulls centred vocals out of most studio tracks.</p></div>
+        <div class="card"><span class="led" style="color:#facc15"></span><h3>EQ &amp; Width</h3><p>Bass, mids, treble and a stereo widener. Limiter keeps it clean.</p></div>
+      </div>
+    </section>
+
+    <section id="setup">
+      <div class="label">Setup · 2 minutes</div>
+      <h2>Route any app through the rack.</h2>
+      <p class="sub">Windows doesn’t let apps grab each other’s sound, so a free virtual cable carries it.</p>
+      <div class="steps">
+        <div class="card step"><h3>Install VB-CABLE</h3><p>Free driver from <a href="https://vb-audio.com/Cable/" target="_blank" rel="noopener">vb-audio.com</a>. Restart if it asks.</p></div>
+        <div class="card step"><h3>Send the app to the cable</h3><p>Windows Settings → Sound → Volume mixer. Set Spotify (or any app) output to <b>CABLE Input</b>.</p></div>
+        <div class="card step"><h3>Pick devices in FX Anything</h3><p>IN = <b>CABLE Output</b>, OUT = your headphones or speakers.</p></div>
+        <div class="card step"><h3>Press ENGAGE</h3><p>Tap a scene pad or twist knobs. Hit B to compare with the original.</p></div>
+      </div>
+    </section>
+
+    <section id="faq">
+      <div class="label">FAQ</div>
+      <h2>Questions</h2>
+      <details><summary>Is it really free?</summary><p>Yes. FX Anything is open source under the MIT license. No account, no tracking.</p></details>
+      <details><summary>Can it speed songs up or slow them down?</summary><p>It changes pitch live (that’s the “slowed” or “nightcore” sound), but it can’t change the speed of audio that’s still playing in another app. That would need the app to play faster or slower itself.</p></details>
+      <details><summary>Is there a delay?</summary><p>Usually 20–40 ms. You won’t notice it with music, but you might in fast games.</p></details>
+      <details><summary>Windows says the installer is unrecognised.</summary><p>The installer isn’t code-signed yet. Click “More info” then “Run anyway”, or build it yourself from the source.</p></details>
+      <details><summary>How do I go back to normal?</summary><p>Set the app back to “Default” in the Windows volume mixer.</p></details>
+    </section>
+
+    <footer>
+      <span>FX Anything · MIT licensed</span>
+      <span>Made with Tauri, React and the Web Audio API</span>
+    </footer>
+  </div>
+  <script>
+    // One place to change the GitHub repository.
+    const REPO = 'Monnapse/fx-anything';
+    document.querySelectorAll('[data-repo-link]').forEach((a) => { a.href = `https://github.com/${REPO}`; });
+    document.querySelectorAll('[data-download]').forEach((a) => { a.href = `https://github.com/${REPO}/releases/latest`; });
+  </script>
+</body>
+</html>
