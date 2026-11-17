@@ -29,3 +29,7 @@ src-tauri/gen/schemas
 
 # Local tooling
 .claude/
+
+# Generated logo comparison pages (the PNG sheets are kept)
+design/**/sheet.html
+design/**/row*.png

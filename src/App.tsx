@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import logoUrl from './assets/logo.svg';
 import { AudioController, TEST_INPUT, type DeviceLists } from './audio/controller';
 import { applyPreset, DEFAULTS, normalize, PRESETS, type ModuleId, type Settings } from './audio/settings';
 import { Fader } from './ui/Fader';
@@ -15,13 +16,7 @@ const CABLE_OUT = /cable output/i;
 const CABLE_IN = /cable input/i;
 
 function Logo() {
-  return (
-    <svg className="logo" viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="1" y="1" width="22" height="22" rx="6" />
-      <path d="M6 15V9M9.5 17V7M13 14v-4M16.5 16V8" />
-      <circle cx="19.2" cy="12" r="1.2" />
-    </svg>
-  );
+  return <img className="logo" src={logoUrl} alt="" draggable={false} />;
 }
 
 function Stepper({ value, opts, onChange, disabled }: { value: string; opts: [string, string][]; onChange: (v: string) => void; disabled?: boolean }) {
