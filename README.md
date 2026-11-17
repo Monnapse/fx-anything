@@ -68,6 +68,8 @@ git push origin v0.1.0
 ```
 
 The landing page in `site/` deploys to GitHub Pages on every push to `main` (enable Pages → "GitHub Actions" in the repo settings once).
+Its live "Hear it" demo runs the app's real audio engine in the browser; after changing `src/audio`, rebuild it with `npm run build:site`.
+The demo track is "Arpeggio Synthesized Funk" by [BaDoink](https://freesound.org/people/BaDoink/sounds/534619) (CC0).
 
 ## License
 
