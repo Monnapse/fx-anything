@@ -108,8 +108,8 @@ h2 { font-family: var(--wide); font-stretch: 125%; font-variation-settings: "wdt
 .pads { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
 .pad { text-align: left; border-radius: 999px; border: 1px solid #45464d; background: #232426; color: var(--muted); padding: 0 16px 0 6px; min-height: 48px; display: flex; align-items: center; gap: 10px; cursor: pointer; font: inherit; transition: border-color .12s, color .12s, background .12s, box-shadow .12s; }
 .pad:hover { color: var(--text); border-color: #4a4f57; }
-.pad-n { width: 36px; height: 36px; flex: none; border-radius: 50%; background: #303236; display: grid; place-items: center; font-size: 0; }
-.pad-n::before { content: ""; display: block; width: 0; height: 0; border-left: 9px solid #c8c9cc; border-top: 6px solid transparent; border-bottom: 6px solid transparent; margin-left: 3px; }
+.pad-n { position: relative; width: 36px; height: 36px; flex: none; border-radius: 50%; background: #303236; font-size: 0; color: transparent; }
+.pad-n::before { content: ""; position: absolute; left: 50%; top: 50%; width: 0; height: 0; border-left: 11px solid #c8c9cc; border-top: 7px solid transparent; border-bottom: 7px solid transparent; transform: translate(-36%, -50%); }
 .pad-l { font-size: 14px; font-weight: 600; line-height: 1.2; }
 .pad.on { color: #fff; border-color: var(--amber); background: #2a2214; box-shadow: 0 0 0 1px var(--amber), 0 0 22px -8px var(--amber); }
 .pad.on .pad-n { background: var(--amber); }
